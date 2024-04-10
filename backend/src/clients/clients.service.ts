@@ -139,6 +139,19 @@ export class ClientsService {
       HAVING SUM(co.payout_to_client) BETWEEN ${body.min} AND ${body.max}`;
   }
 
+  async clientsSortedByNameAndPhoneNumber(
+    sortByName: string,
+    sortByNumber: string,
+  ) {
+    return this.db.$queryRaw`
+      SELECT full_name, full_number
+      FROM clients
+      ORDER BY 
+        ${sortByName === 'ASC' ? 'full_name ASC' : 'full_name DESC'},
+        ${sortByNumber === 'ASC' ? 'full_number ASC' : 'full_number DESC'};
+    `;
+  }
+
   async findClientsSorted() {
     return this.db
       .$queryRaw`SELECT * FROM clients ORDER BY full_name ASC, client_code DESC`;

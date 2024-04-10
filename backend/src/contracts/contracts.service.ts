@@ -21,7 +21,7 @@ export class ContractsService {
     `);
     return contracts;
   }
-  
+
   async findAllMax(payoutAmount: number) {
     const contracts = await this.db.queryRaw(`
       SELECT * FROM contracts
